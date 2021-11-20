@@ -22,7 +22,6 @@ void main() {
 			srand(i);
 			arr[i]=(int*)malloc(n*sizeof(int));
 			vec[i]=rand()%100;
-			res[i]=0;
 			for (j=0;j<n;j++)
 				arr[i][j]=rand()%100;
 		}
