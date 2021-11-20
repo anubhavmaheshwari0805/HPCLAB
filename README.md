@@ -1,5 +1,5 @@
 # HPCLAB
->Note : For compiling the program :
+>Note : For compiling the program use the command -
 >```
 >gcc pgm_name.c -fopenmp
 >```
