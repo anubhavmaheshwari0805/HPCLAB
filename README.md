@@ -1,8 +1,8 @@
 # HPCLAB
-Note : For compiling the program :
-```
-gcc pgm_name.c -fopenmp
-```
+>Note : For compiling the program :
+>```
+>gcc pgm_name.c -fopenmp
+>```
 #### ex-1.c : Write an OpenMP program to print "Hello World" with thread number and total number of thread used. [CODE](ex-1.c)
 #### ex-2.c : Write an OpenMP program to print message according to even and odd id number of thread. [CODE](ex-2.c)
 #### 01.c : Given an n*n matrix arr and a vector vec of length n, their product res=arr*vec . Write a program to implement the multiplication using OpenMP PARALLEL directive. [CODE](01.c)
