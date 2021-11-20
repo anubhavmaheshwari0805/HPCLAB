@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<omp.h>
-int main() {
+void main() {
     int r,i,ans=0;
     printf("Enter number of sections : ");
     scanf("%d",&r);
@@ -23,23 +23,10 @@ int main() {
                 ans+=sum;
 	    }
     }
-    /*#pragma omp parallel
-    {
-        #pragma omp for
-        for(i=0;i<r;i++) {
-            int j,sum=0;
-            for(j=0;j<size[i];j++)
-                sum+=arr[i][j];
-            #pragma omp critical
-            {
-                ans+=sum;
-            }
-        }
-    }*/
     for(i=0;i<r;i++) {
-        printf("Section-%d ( %d Items ) : ",i,size[i]);
+        printf("Section - %2d ( %3d Items ) : ",i,size[i]);
         for(int j=0;j<size[i];j++)
-            printf("%d ",arr[i][j]);
+            printf("%3d ",arr[i][j]);
         printf("\n");
     }
     printf("Total Amount : %d",ans);
