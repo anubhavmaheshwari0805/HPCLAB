@@ -7,6 +7,7 @@ void main() {
     scanf("%d",&r);
     int **arr=(int**)malloc(r*sizeof(int*));
     int *size=(int*)malloc(r*sizeof(int));
+    omp_set_num_threads(r);
 	#pragma omp parallel
     {
         #pragma omp for

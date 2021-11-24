@@ -15,6 +15,7 @@ void main() {
 	int **arr1=(int**)malloc(m*sizeof(int*));
 	int **arr2=(int**)malloc(p*sizeof(int*));
 	int **res=(int**)malloc(m*sizeof(int*));
+	omp_set_num_threads(m);
 	#pragma omp parallel private(j)
 	{
 		#pragma omp for
@@ -26,6 +27,7 @@ void main() {
 				arr1[i][j]=rand()%100;
 		}
 	}
+	omp_set_num_threads(p);
     #pragma omp parallel private(j)
 	{
 		#pragma omp for
@@ -36,6 +38,7 @@ void main() {
 				arr2[i][j]=rand()%100;
 		}
 	}
+	omp_set_num_threads(m);
 	#pragma omp parallel private(j,k)
 	{
 		#pragma omp for
