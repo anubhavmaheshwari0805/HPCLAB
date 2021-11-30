@@ -4,7 +4,7 @@
 void main() {
     int r,i,ans=0;
     printf("Enter number of sections : ");
-    scanf("%d",&r);
+    scanf_s("%d",&r);
     int **arr=(int**)malloc(r*sizeof(int*));
     int *size=(int*)malloc(r*sizeof(int));
     omp_set_num_threads(r);

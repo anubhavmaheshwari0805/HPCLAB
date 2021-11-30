@@ -4,7 +4,7 @@
 void main() {
     int n;
     printf("Enter the size of vector : ");
-    scanf("%d",&n);
+    scanf_s("%d",&n);
     int *a,x,*y,*z,i=0;
     a=(int*)malloc(n*sizeof(int));
     y=(int*)malloc(n*sizeof(int));

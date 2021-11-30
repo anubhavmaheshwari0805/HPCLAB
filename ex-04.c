@@ -4,9 +4,9 @@
 void main() {
 	int m,n,p,q;
 	printf("Enter the size of 1st matrix : ");
-	scanf("%d%d",&m,&n);
+	scanf_s("%d%d",&m,&n);
     printf("Enter the size of 2nd matrix : ");
-	scanf("%d%d",&p,&q);
+	scanf_s("%d%d",&p,&q);
 	if (n!=p) {
 		printf("Multiplication is not possible.\n");
 		exit(0);

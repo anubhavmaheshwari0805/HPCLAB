@@ -4,9 +4,9 @@
 void main() {
 	int m,n;
 	printf("Enter the size of square matrix : ");
-	scanf("%d",&n);
+	scanf_s("%d",&n);
 	printf("Enter the size of vector : ");
-	scanf("%d", &m);
+	scanf_s("%d", &m);
 	if (m!=n) {
 		printf("Multiplication is not possible.\n");
 		exit(0);

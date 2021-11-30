@@ -18,5 +18,5 @@ void main() {
     }
     et=clock();
     printf("Time Taken : %lf\n",(double)((double)(et-st)/CLOCKS_PER_SEC));
-    printf("Value of Pi = %.16lf\n",pi);
+    printf("Value of Pi = %lf\n",pi);
 }
