@@ -1,40 +1,53 @@
-#include "mpi.h"
-#include <stdio.h>
-#include <stdlib.h>
-#define SIZE 16
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
-int main(int argc, char* argv[])
-{
-	int numtasks, rank, source, dest, outbuf, i, tag = 1, inbuf[4] = { MPI_PROC_NULL, MPI_PROC_NULL, MPI_PROC_NULL, MPI_PROC_NULL, }, nbrs[4], dims[2] = { 4,4 }, periods[2] = { 0, 0 }, reorder = 0, coords[2];
-	MPI_Request reqs[8];
-	MPI_Status stats[8];
-	MPI_Comm cartcomm;
-	MPI_Init(&argc, &argv);
-	MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
-	if (numtasks == SIZE) {
-		MPI_Cart_create(MPI_COMM_WORLD, 2, dims, periods, reorder, &cartcomm);
-		MPI_Comm_rank(cartcomm, &rank);
-		MPI_Cart_coords(cartcomm, rank, 2, coords);
-		MPI_Cart_shift(cartcomm, 0, 1, &nbrs[UP], &nbrs[DOWN]);
-		MPI_Cart_shift(cartcomm, 1, 1, &nbrs[LEFT], &nbrs[RIGHT]);
-		printf("rank= %d coords= %d %d neighbors(u,d,l,r)= %d %d %d %d\n",
-			rank, coords[0], coords[1], nbrs[UP], nbrs[DOWN], nbrs[LEFT],
-			nbrs[RIGHT]);
-		outbuf = rank;
-		for (i = 0; i < 4; i++) {
-			dest = nbrs[i];
-			source = nbrs[i];
-			MPI_Isend(&outbuf, 1, MPI_INT, dest, tag, MPI_COMM_WORLD, &reqs[i]);
-			MPI_Irecv(&inbuf[i], 1, MPI_INT, source, tag, MPI_COMM_WORLD, &reqs[i + 4]);
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<omp.h>
+void main() {
+	int n;
+	printf("Enter the dimension of square matrices : ");
+	scanf_s("%d", &n);
+	int i = 0, j = 0, k = 0;
+	int** arr1 = (int**)malloc(n * sizeof(int*));
+	int** arr2 = (int**)malloc(n * sizeof(int*));
+	int** res = (int**)malloc(n * sizeof(int*));
+	omp_set_num_threads(64);
+	#pragma omp parallel private(j)
+	{
+		#pragma omp for
+		for (i = 0; i < n; i++) {
+			srand(i);
+			arr1[i] = (int*)malloc(n * sizeof(int));
+			arr2[i] = (int*)malloc(n * sizeof(int));
+			res[i] = (int*)malloc(n * sizeof(int));
+			for (j = 0; j < n; j++) {
+				arr1[i][j] = rand() % 100;
+				arr2[i][j] = rand() % 100;
+			}
 		}
-		MPI_Waitall(8, reqs, stats);
-		printf("rank= %d inbuf(u,d,l,r)= %d %d %d %d\n",
-			rank, inbuf[UP], inbuf[DOWN], inbuf[LEFT], inbuf[RIGHT]);
 	}
-	else
-		printf("Must specify %d tasks. Terminating.\n", SIZE);
-	MPI_Finalize();
+	time_t st, et;
+	st = clock();
+	#pragma omp parallel private(j,k)
+	{
+		#pragma omp for
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < n; j++) {
+				res[i][j] = 0;
+				for (k = 0; k < n; k++)
+					res[i][j] += arr1[i][k] * arr2[k][j];
+			}
+		}
+	}
+	et = clock();
+	printf("Time taken by parallel algorithm : %lf\n", (double)(et - st) / CLOCKS_PER_SEC);
+	st = clock();
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			res[i][j] = 0;
+			for (k = 0; k < n; k++)
+				res[i][j] += arr1[i][k] * arr2[k][j];
+		}
+	}
+	et = clock();
+	printf("Time taken by Sequential algorithm : %lf\n", (double)(et - st) / CLOCKS_PER_SEC);
 }

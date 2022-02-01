@@ -1,2 +1,3 @@
 ﻿  Program.cpp
+D:\Anubhav\Important_2021-22\Sem 7\HPCLAB\Program\Program\Program.cpp(5,13): warning C4326: return type of 'main' should be 'int' instead of 'void'
   Program.vcxproj -> D:\Anubhav\Important_2021-22\Sem 7\HPCLAB\Program\Debug\Program.exe
